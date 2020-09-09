@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "chat-d0950": {
+      "hosting": {
+        "firebase-chat": [
+          "chat-d0950"
+        ]
+      }
+    }
+  }
+}

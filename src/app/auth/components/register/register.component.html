@@ -1,0 +1,77 @@
+<section id="wrapper">
+  <div class="login-register" style="background-image:url('assets/images/background-min.jpg');">
+    <div class="login-box card">
+      <div class="card-body">
+        <form (submit)="onSubmit()" class="form-horizontal form-material" [formGroup]="form">
+          <h3 class="box-title m-b-20 text-center p-3">Registrate</h3>
+          <div class="form-group ">
+            <div class="col-xs-12">
+              <input
+                class="form-control"
+                type="email"
+                placeholder="Correo electronico"
+                formControlName="email"
+                required>
+              <div class="invalid-feedback d-block" *ngIf="form.get('email').invalid && (form.get('email').dirty || form.get('email').touched)">
+                <div *ngIf="this.form.get('email').errors?.required">
+                  El campo es requerido.
+                </div>
+                <div *ngIf="this.form.get('email').errors?.email">
+                  Ingrese un correo valido.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12">
+              <input
+                class="form-control"
+                type="password"
+                placeholder="Contraseña"
+                formControlName="password"
+                required>
+              <div class="invalid-feedback d-block" *ngIf="form.get('password').invalid && (form.get('password').dirty || form.get('password').touched)">
+                <div *ngIf="this.form.get('password').errors?.required">
+                  El campo es requerido.
+                </div>
+                <div *ngIf="this.form.get('password').errors?.minlength">
+                  La contraseña debe tener 6 caracteres como minimo
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12">
+              <input
+                class="form-control"
+                type="password"
+                placeholder="Confirmar contraseña"
+                formControlName="passwordConfirm"
+                required>
+              <div class="invalid-feedback d-block" *ngIf="form.get('passwordConfirm').invalid && (form.get('passwordConfirm').dirty || form.get('passwordConfirm').touched)">
+                <div *ngIf="this.form.get('passwordConfirm').errors?.required">
+                  El campo es requerido.
+                </div>
+                <div *ngIf="this.form.get('passwordConfirm').errors?.match">
+                  Las contraseñas no coinciden
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group text-center">
+            <div class="col-xs-12 p-b-20">
+              <button class="btn btn-block btn-lg btn-primary btn-rounded" type="submit">
+                Registrarme
+              </button>
+            </div>
+          </div>
+          <div class="form-group m-b-0">
+            <div class="col-sm-12 text-center">
+              Tienes una cuenta? <span routerLink="../login" class="pointer text-info m-l-5"><b>Inicia sesión!</b></span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
