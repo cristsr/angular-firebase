@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
-import { BehaviorSubject} from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 @Injectable({
@@ -37,5 +37,13 @@ export class AuthService {
 
   getCurrentUser(): Promise<User> {
     return this.fireAuth.authState.pipe(first()).toPromise();
+  }
+
+  async sendVerificationEmail(): Promise<void> {
+    return (await this.fireAuth.currentUser).sendEmailVerification();
+  }
+
+  getUser(): Observable<User> {
+    return this.fireAuth.authState;
   }
 }

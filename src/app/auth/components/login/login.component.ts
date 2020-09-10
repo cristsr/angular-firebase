@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +21,7 @@ export class LoginComponent {
     public authService: AuthService,
   ) {}
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -29,16 +29,14 @@ export class LoginComponent {
 
     const credentials = this.form.value;
     console.log('Form: ', credentials);
-    this.authService.login(credentials).then(
-      () => {
-        console.log('Login successfully ', this.authService.getCurrentUser());
-        this.router.navigate(['/']);
-      },
-      err => {
-        console.log('Error registry :', err.code);
-        this.showErrorRegistrationMessage(err.code);
-      }
-    );
+    try {
+      await this.authService.login(credentials);
+      console.log('Login successfully ', await this.authService.getCurrentUser());
+      this.router.navigate(['/']);
+    } catch (e) {
+      console.log('Error login :', e.code);
+      this.showErrorRegistrationMessage(e.code);
+    }
   }
 
   showErrorRegistrationMessage(code): void {

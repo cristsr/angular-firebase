@@ -1,0 +1,34 @@
+<section class="box d-flex justify-content-center align-items-center">
+  <div class="col-6 align-self-center m-5">
+    <div class="card">
+      <div class="card-title">
+        <h3 class="text-center p-3">
+          Verificar la dirección de correo electrónico de tu cuenta
+        </h3>
+      </div>
+      <div class="card-body">
+        <p>
+          Para usar las características de la aplicacion, es necesario verificar la dirección de correo electrónico de tu cuenta.
+          Para ello hemos enviado un mensaje que contiene un  vinculo para que puedas verificar tu correo electronico.
+        </p>
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+        <button *ngIf="isSendingMail" class="btn btn-primary" disabled>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Enviando...
+        </button>
+        <button
+          class="btn btn-success"
+          *ngIf="!isSendingMail"
+          (click)="sendVerificationEmail()">
+          Reenviar correo
+        </button>
+        <button
+          (click)="redirect()"
+          class="btn btn-primary">
+          Iniciar sesión
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -35,7 +35,7 @@ export class RegisterComponent {
     };
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -43,16 +43,15 @@ export class RegisterComponent {
 
     const credentials = this.form.value;
     console.log('Form: ', credentials);
-    this.authService.register(credentials).then(
-      () => {
-        console.log('Successfully register');
-        this.showSuccessRegistrationMessage();
-      },
-      err => {
-        console.log('Error registry', err.code);
-        this.showErrorRegistrationMessage(err.code);
-      }
-    );
+    try {
+      await this.authService.register(credentials);
+      console.log('Successfully register');
+      await this.authService.sendVerificationEmail();
+      this.showSuccessRegistrationMessage();
+    } catch (e) {
+      console.log('Error registry', e.code);
+      this.showErrorRegistrationMessage(e.code);
+    }
   }
 
   showSuccessRegistrationMessage(): void {
@@ -60,7 +59,7 @@ export class RegisterComponent {
       'Éxito!',
       'Te has registrado exitosamente!',
       'success'
-    );
+    ).then(() => this.router.navigate(['auth/email-verification']));
   }
 
   showErrorRegistrationMessage(code): void {
