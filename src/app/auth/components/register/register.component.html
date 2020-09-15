@@ -4,6 +4,23 @@
       <div class="card-body">
         <form (submit)="onSubmit()" class="form-horizontal form-material" [formGroup]="form">
           <h3 class="box-title m-b-20 text-center p-3">Registrate</h3>
+          <!-- name -->
+          <div class="form-group ">
+            <div class="col-xs-12">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Nombre"
+                formControlName="name"
+                required>
+              <div class="invalid-feedback d-block" *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)">
+                <div *ngIf="this.form.get('name').errors?.required">
+                  El campo es requerido.
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- email -->
           <div class="form-group ">
             <div class="col-xs-12">
               <input
@@ -22,6 +39,7 @@
               </div>
             </div>
           </div>
+          <!-- password -->
           <div class="form-group">
             <div class="col-xs-12">
               <input
@@ -40,6 +58,7 @@
               </div>
             </div>
           </div>
+          <!-- password confirm -->
           <div class="form-group">
             <div class="col-xs-12">
               <input

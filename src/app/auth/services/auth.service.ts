@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { User } from 'firebase';
+import { auth, User } from 'firebase';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class AuthService {
     private fireAuth: AngularFireAuth
   ) { }
 
-  async login(credentials: any): Promise<any> {
+  async login(credentials: any): Promise<User> {
     const result = await this.fireAuth.signInWithEmailAndPassword(
       credentials.email,
       credentials.password
@@ -23,11 +24,24 @@ export class AuthService {
     return result.user;
   }
 
-  async register(credentials: any): Promise<any> {
+  async loginWithGoogle(): Promise<User> {
+    const provider = new auth.GoogleAuthProvider();
+    const result = await this.fireAuth.signInWithPopup(provider);
+    return result.user;
+  }
+
+  async register(data: any): Promise<any> {
     const result = await this.fireAuth.createUserWithEmailAndPassword(
-      credentials.email,
-      credentials.password
+      data.email,
+      data.password
     );
+
+    await result.user.updateProfile({
+      displayName: data.name
+    });
+
+    await this.sendVerificationEmail();
+
     return result.user;
   }
 
@@ -40,7 +54,9 @@ export class AuthService {
   }
 
   async sendVerificationEmail(): Promise<void> {
-    return (await this.fireAuth.currentUser).sendEmailVerification();
+    return (await this.fireAuth.currentUser).sendEmailVerification({
+      url: environment.url
+    });
   }
 
   getUser(): Observable<User> {

@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class RegisterComponent {
   public form = this.fb.group({
+    name: ['', [Validators.required]],
     email: ['', [Validators.email, Validators.required]],
     password: ['', [Validators.required, Validators.minLength(6)]],
     passwordConfirm: ['', [Validators.required, this.matchValues('password')]]
@@ -46,7 +47,6 @@ export class RegisterComponent {
     try {
       await this.authService.register(credentials);
       console.log('Successfully register');
-      await this.authService.sendVerificationEmail();
       this.showSuccessRegistrationMessage();
     } catch (e) {
       console.log('Error registry', e.code);

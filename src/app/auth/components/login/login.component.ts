@@ -21,7 +21,7 @@ export class LoginComponent {
     public authService: AuthService,
   ) {}
 
-  async onSubmit(): Promise<void> {
+  async onLogin(): Promise<void> {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -30,8 +30,19 @@ export class LoginComponent {
     const credentials = this.form.value;
     console.log('Form: ', credentials);
     try {
-      await this.authService.login(credentials);
-      console.log('Login successfully ', await this.authService.getCurrentUser());
+      const user = await this.authService.login(credentials);
+      console.log('Login successfully ', user);
+      this.router.navigate(['/']);
+    } catch (e) {
+      console.log('Error login: ', e.code);
+      this.showErrorRegistrationMessage(e.code);
+    }
+  }
+
+  async onLoginGoogle(): Promise<void> {
+    try {
+      const user = await this.authService.loginWithGoogle();
+      console.log('Login successfully ', user);
       this.router.navigate(['/']);
     } catch (e) {
       console.log('Error login :', e.code);
@@ -43,6 +54,7 @@ export class LoginComponent {
     const errorMessages = {
       'auth/user-not-found': 'Usuario no encontrado!',
       'auth/wrong-password': 'Contraseña incorrecta!',
+      'auth/popup-closed-by-user': 'Cancelaste la autenticación',
       default: 'Ocurrio un error! intenta nuevamente.'
     };
 

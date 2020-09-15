@@ -2,8 +2,8 @@
   <div class="login-register" style="background-image:url('assets/images/background-min.jpg');">
     <div class="login-box card">
       <div class="card-body">
-        <form (submit)="onSubmit()" class="form-horizontal form-material" [formGroup]="form">
-          <h3 class="box-title m-b-20 text-center p-3">Iniciar sesión</h3>
+        <form (submit)="onLogin()" [formGroup]="form">
+          <h3 class="m-b-20 text-center p-3">Iniciar sesión</h3>
           <div class="form-group ">
             <div class="col-xs-12">
               <input
@@ -52,26 +52,25 @@
             </div>
           </div>
           <div class="form-group text-center">
-            <div class="col-xs-12 p-b-20">
+            <div class="col-xs-12">
               <button class="btn btn-block btn-lg btn-primary btn-rounded" type="submit">
                 Ingresar
               </button>
             </div>
           </div>
-          <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
-              <div class="social">
-                <a href="javascript:void(0)" class="btn  btn-facebook" data-toggle="tooltip" title="Login with Facebook"> <i aria-hidden="true" class="fab fa-facebook-f"></i> </a>
-                <a href="javascript:void(0)" class="btn btn-googleplus" data-toggle="tooltip" title="Login with Google"> <i aria-hidden="true" class="fab fa-google-plus-g"></i> </a>
-              </div>
-            </div>
-          </div>
-          <div class="form-group m-b-0">
-            <div class="col-sm-12 text-center">
-              No tienes una cuenta? <span routerLink="../register" class="pointer text-info m-l-5"><b>Registrate!</b></span>
-            </div>
-          </div>
         </form>
+        <div class="form-group text-center">
+          <div class="col-xs-12">
+            <button class="btn btn-block btn-sm btn-danger btn-rounded" (click)="onLoginGoogle()">
+              Entrar con Google
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12 text-center">
+            No tienes una cuenta? <span routerLink="../register" class="pointer text-info m-l-5"><b>Registrate!</b></span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

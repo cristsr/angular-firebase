@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
   ): Observable<boolean> {
     return this.authService.getUser().pipe(
       map(user => {
-        console.log('[AUTH GUARD canActivate] user: ', user);
+        console.log('[AUTH GUARD canActivate]');
 
         if (!user || !user.emailVerified) {
           return true;

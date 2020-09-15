@@ -21,11 +21,11 @@ export class HomeGuard implements CanActivate {
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot)
-    : Observable<boolean> {
+    state: RouterStateSnapshot
+  ): Observable<boolean> {
     return this.authService.getUser().pipe(
       map(user => {
-        console.log('[HOME GUARD canActivate] user: ', user);
+        console.log('[HOME GUARD canActivate]');
         if (!user) {
           this.router.navigate(['auth/login']);
           return false;
