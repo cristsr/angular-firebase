@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { PostService } from '../../services/post/post.service';
+import { ActivatedRoute } from '@angular/router';
+import { PostService } from '../../services/post.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.scss']
+  selector: 'app-update-post',
+  templateUrl: './update-post.component.html',
+  styleUrls: ['./update-post.component.scss']
 })
-export class PostComponent implements OnInit {
+export class UpdatePostComponent implements OnInit {
+
+  postId: string;
 
   form = this.fb.group({
     title: ['', Validators.required],
@@ -19,23 +22,31 @@ export class PostComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private postService: PostService
+    private postService: PostService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.setPost();
   }
 
-  async createPost(): Promise<void> {
+  async setPost(): Promise<void> {
+    this.postId = this.route.snapshot.params.id;
+    const post = await this.postService.getById(this.postId);
+    console.log('[UPDATE POST] post value', post.data());
+    this.form.setValue(post.data());
+  }
+
+  async updatePost(): Promise<void> {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
     try {
-      const post = await this.postService.create(this.form.value);
-      console.log('[POST COMPONENT] post: ', post.id);
-      this.showSuccessOperationMessage('created');
-      this.form.reset();
+      await this.postService.update(this.postId, this.form.value);
+      console.log('[UPDATE POST] new value: ', this.form.value);
+      this.showSuccessOperationMessage('post/updated');
     } catch (e) {
       console.log('[POST COMPONENT] error code: ', e.code);
       this.showErrorOperationMessage(e.code);
@@ -44,8 +55,7 @@ export class PostComponent implements OnInit {
 
   showSuccessOperationMessage(code: string): void {
     const messages = {
-      created: 'Post creado con exito!',
-      updated: 'Post actualizado con exito',
+      'post/updated': 'Post actualizado con exito',
     };
 
     Swal.fire(
@@ -66,4 +76,5 @@ export class PostComponent implements OnInit {
       'error'
     );
   }
+
 }

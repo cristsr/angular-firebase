@@ -1,25 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavbarComponent } from './navbar.component';
+import { ShowPostComponent } from './show-post.component';
 
-describe('NavbarComponent', () => {
-  let component: NavbarComponent;
-  let fixture: ComponentFixture<NavbarComponent>;
+describe('ShowPostComponent', () => {
+  let component: ShowPostComponent;
+  let fixture: ComponentFixture<ShowPostComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NavbarComponent ]
+      declarations: [ ShowPostComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NavbarComponent);
+    fixture = TestBed.createComponent(ShowPostComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create-post', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

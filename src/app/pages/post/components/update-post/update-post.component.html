@@ -1,3 +1,4 @@
+<h3>Actualizar post</h3>
 <form class="px-5" [formGroup]="form">
   <div class="form-group">
     <label for="title">Titulo</label>
@@ -36,17 +37,12 @@
     *ngIf="form.invalid && form.touched">
     Todos los campos son obligatorios!
   </div>
-<!--  <div class="invalid-feedback d-block" *ngIf="form.get('password').invalid && (form.get('password').dirty || form.get('password').touched)">-->
-<!--    <div *ngIf="this.form.get('password').errors?.required">-->
-<!--      El campo es requerido.-->
-<!--    </div>-->
-<!--  </div>-->
   <div class="form-group">
     <button
       type="submit"
       class="btn btn-primary"
-      (click)="createPost()">
-      Crear post
+      (click)="updatePost()">
+      Actualizar post
     </button>
   </div>
 </form>
